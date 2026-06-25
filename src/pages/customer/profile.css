@@ -1,0 +1,52 @@
+.profile-page {
+  padding-top: 28px;
+  padding-bottom: 56px;
+}
+.profile-title {
+  font-size: 1.7rem;
+  font-weight: 800;
+  margin-bottom: 24px;
+}
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.prof-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  padding: 24px;
+}
+.prof-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 18px;
+}
+.prof-addresses {
+  grid-column: 1 / -1;
+}
+
+.addr-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-btn);
+  padding: 14px 16px;
+}
+.addr-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.addr-del:hover {
+  color: var(--error) !important;
+}
+
+@media (max-width: 760px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
