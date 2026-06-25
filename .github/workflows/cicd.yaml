@@ -8,7 +8,7 @@ on:
 
 env:
   IMAGE_NAME: haze21/frontend-ui
-  HELM_REPO: haze21/k8s-helm-charts
+  HELM_REPO: haze-me/k8s-helm-charts
   HELM_VALUES_PATH: charts/frontend-ui/values.yaml
 
 jobs:
@@ -48,7 +48,7 @@ jobs:
           context: .
           push: ${{ github.ref == 'refs/heads/main' }}
           build-args: |
-            VITE_API_BASE_URL=https://api.yourdomain.com
+            VITE_API_BASE_URL=https://api.emchrismobility.com
           tags: |
             ${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.TAG }}
             ${{ env.IMAGE_NAME }}:latest
