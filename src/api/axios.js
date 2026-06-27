@@ -62,7 +62,9 @@ api.interceptors.response.use(
 // "Validation failed" so the user knows exactly what to fix.
 export function getApiErrorMessage(error, fallback = 'Something went wrong') {
   const data = error?.response?.data;
+  if (!data) return error?.message || fallback;
 
+  // Spring Boot format: { errors: ["msg"] | [{ field, message }] }
   const errs = data?.errors;
   if (Array.isArray(errs) && errs.length) {
     return errs
@@ -75,9 +77,22 @@ export function getApiErrorMessage(error, fallback = 'Something went wrong') {
       })
       .join(' · ');
   }
-
   if (typeof errs === 'string' && errs) return errs;
   if (data?.message) return data.message;
+
+  // Django DRF format: { non_field_errors: ["msg"] } or { field: ["msg"] }
+  if (typeof data === 'object' && !Array.isArray(data)) {
+    if (Array.isArray(data.non_field_errors) && data.non_field_errors.length) {
+      return data.non_field_errors[0];
+    }
+    if (data.detail) return data.detail;
+    const fieldErrors = Object.entries(data)
+      .filter(([k]) => !['detail', 'message', 'success'].includes(k))
+      .flatMap(([, v]) => (Array.isArray(v) ? v : typeof v === 'string' ? [v] : []))
+      .filter(Boolean);
+    if (fieldErrors.length) return fieldErrors[0];
+  }
+
   return error?.message || fallback;
 }
 

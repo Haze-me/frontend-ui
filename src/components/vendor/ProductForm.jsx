@@ -56,7 +56,16 @@ export default function ProductForm({
         </div>
         <div className="field">
           <label>SKU</label>
-          <input className="input" value={form.sku} onChange={(e) => set('sku', e.target.value)} required />
+          <input
+            className="input"
+            value={form.sku}
+            onChange={(e) => set('sku', e.target.value.replace(/[^a-zA-Z0-9_-]/g, ''))}
+            placeholder="e.g. PROD-001"
+            required
+          />
+          <p style={{ fontSize: '0.78rem', color: 'var(--muted)', marginTop: 4 }}>
+            Letters, numbers, hyphens and underscores only.
+          </p>
         </div>
       </div>
 
